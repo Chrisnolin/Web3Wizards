@@ -133,7 +133,8 @@ function displayLoggedInUser(name, displayFriendsList = false) {
 
   if (displayFriendsList) {
     // Retrieve friends list from local storage based on the username
-    const friends = JSON.parse(localStorage.getItem(`friendsList_${userData.name}`)) || [];
+    const friendsKey = `friendsList_${userData.name}`;
+    const friends = JSON.parse(localStorage.getItem(friendsKey)) || [];
 
     // Update friends list in user data to ensure it's always in sync
     userData.friends = friends;
@@ -182,12 +183,14 @@ function addFriend() {
   localStorage.setItem('loggedInUser', JSON.stringify(userData));
 
   // Save the friends list separately based on the username
-  localStorage.setItem(`friendsList_${userData.name}`, JSON.stringify(userData.friends));
+  const friendsKey = `friendsList_${userData.name}`;
+  const friends = JSON.parse(localStorage.getItem(friendsKey)) || [];
+  friends.push(friendName);
+  localStorage.setItem(friendsKey, JSON.stringify(friends));
 
   // Display updated friends list
   displayLoggedInUser(userData.name, true);
 }
-
 
 // Function to initialize the app
 function initApp() {
