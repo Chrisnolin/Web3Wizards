@@ -1,5 +1,4 @@
 // app.js
-
 // Initialize MetaMask
 function initMetaMask() {
   if (typeof window.ethereum === 'undefined') {
@@ -133,9 +132,9 @@ function displayLoggedInUser(name, displayFriendsList = false) {
   userElement.html(`Logged in as: ${userData.name} (${userData.address})`);
 
   if (displayFriendsList) {
-    // Retrieve friends list from local storage
-    const friends = JSON.parse(localStorage.getItem('friendsList')) || [];
-    
+    // Retrieve friends list from local storage based on the username
+    const friends = JSON.parse(localStorage.getItem(`friendsList_${userData.name}`)) || [];
+
     // Update friends list in user data to ensure it's always in sync
     userData.friends = friends;
 
@@ -148,6 +147,7 @@ function displayLoggedInUser(name, displayFriendsList = false) {
     });
   }
 }
+
 // Function to add friends
 function addFriend() {
   const friendName = prompt('Enter the name of the friend you want to add:');
@@ -175,14 +175,19 @@ function addFriend() {
     return;
   }
 
-  // Update and save the friends list in local storage
-  const updatedFriendsList = [...userData.friends, friendName];
+  // Update friends list in user data
+  userData.friends.push(friendName);
+
+  // Save the updated user data to local storage
   localStorage.setItem('loggedInUser', JSON.stringify(userData));
-  localStorage.setItem('friendsList', JSON.stringify(updatedFriendsList));
+
+  // Save the friends list separately based on the username
+  localStorage.setItem(`friendsList_${userData.name}`, JSON.stringify(userData.friends));
 
   // Display updated friends list
   displayLoggedInUser(userData.name, true);
 }
+
 
 // Function to initialize the app
 function initApp() {
