@@ -1,0 +1,169 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web3 Social Platform</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: url('https://images.unsplash.com/photo-1614851099507-f1a93001d984?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      color: #fff;
+      position: relative;
+      animation: backgroundMove 3s linear infinite;
+    }
+
+    @keyframes backgroundMove {
+      0% {
+        background-position: 0% 0%;
+      }
+      100% {
+        background-position: 100% 100%;
+      }
+    }
+
+    header {
+      background-color: #200095;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: 'Black Ops One', cursive; /* Use Black Ops One font */
+      width: 100%;
+    }
+    header img {
+      max-width: 110px; /* Set the maximum width for the logo */
+      position: absolute;
+      top: 5%;
+      left: 35%;
+      transform: translateY(-50%);
+    }
+
+    #login {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      width: 200px;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #00acee;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #tweet-form {
+      margin-top: 2rem;
+      display: none;
+      width: 400px; /* Increase the width */
+    }
+
+    textarea {
+      width: 100%;
+      margin-bottom: 1rem;
+      resize: vertical; /* Allow vertical resizing */
+      min-height: 100px; /* Set a minimum height */
+      font-size: 1.2rem; /* Set the font size */
+    }
+
+    .tweet {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      color: #000000;
+    }
+
+    #tweets {
+      margin-top: 2rem;
+      width: 400px;
+      display: flex; /* Use flex display for better layout */
+      flex-direction: column; /* Stack tweets vertically */
+      align-items: center;
+    }
+
+    #logged-in-user {
+      margin-top: 1rem;
+    }
+
+    #friends-box {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      padding: 10px;
+      background-color: #222121;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      max-height: 300px; /* Set a maximum height for the friends box */
+      overflow-y: auto; /* Add a scrollbar if friends list overflows */
+    }
+
+    #friends-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    #friends-list li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="mylogo.png" alt="Logo">
+    DecentralTalk
+  </header>
+  <div id="register">
+    <label for="registerName">Enter your name to register:</label>
+    <input type="text" id="registerName" placeholder="Your Name">
+    <button onclick="registerUser()">Register</button>
+  </div>
+  <div id="login">
+    <label for="name">Enter your name:</label>
+    <input type="text" id="name" placeholder="Your Name">
+    <button id="login-button" onclick="loginWithMetaMask()">Login with MetaMask</button>
+  </div>
+  <div id="tweet-form">
+    <div id="Welcome"></div>
+    <img src="bird.gif" alt="GIF" style="width: 80px; height: 80px; margin-right: 10px;">
+    <textarea id="tweet-input" placeholder="What's happening?"></textarea>
+    <button onclick="sendTweet()">Post</button>
+    <button onclick="addFriend()">Add Friend</button>
+    <div id="friends-box">
+      <h3>Your Friends</h3>
+      <ul id="friends-list"></ul>
+    </div>  
+  </div>
+  <div id="tweets"></div>
+  <div id="logged-in-user"></div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
