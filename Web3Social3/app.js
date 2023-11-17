@@ -148,6 +148,7 @@ function displayLoggedInUser(name, displayFriendsList = false) {
     });
   }
 }
+// Function to add friends
 function addFriend() {
   const friendName = prompt('Enter the name of the friend you want to add:');
 
@@ -197,16 +198,26 @@ function initApp() {
 
   // Add event listener for the login button
   $('#login-button').on('click', function() {
-    // You can add your MetaMask login logic here if needed
+    // Request MetaMask login
+    ethereum
+      .request({ method: 'eth_requestAccounts' })
+      .then(() => {
+        // For demonstration purposes, hide the login and register forms
+        $('#login').hide();
+        $('#register').hide();
 
-    // For demonstration purposes, hide the login and register forms and show the tweet form
-    $('#login').hide();
-    $('#register').hide();
-    $('#tweet-form').show();
+        // Show the tweet form
+        $('#tweet-form').show();
+      })
+      .catch((err) => {
+        console.error(err);
+        alert('MetaMask login failed.');
+      });
   });
 }
 
 // Run the app initialization when the document is ready
 $(document).ready(() => {
+  // Initialize the app
   initApp();
 });
