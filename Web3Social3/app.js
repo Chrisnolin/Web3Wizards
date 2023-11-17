@@ -150,6 +150,7 @@ function displayLoggedInUser(name, displayFriendsList = false) {
 }
 
 // Function to add friends
+// Function to add friends
 function addFriend() {
   const friendName = prompt('Enter the name of the friend you want to add:');
 
@@ -182,11 +183,11 @@ function addFriend() {
   // Save the updated user data to local storage
   localStorage.setItem('loggedInUser', JSON.stringify(userData));
 
-  // Save the friends list separately based on the username
+  // Save the friends list separately based on the username, without duplicates
   const friendsKey = `friendsList_${userData.name}`;
-  const friends = JSON.parse(localStorage.getItem(friendsKey)) || [];
-  friends.push(friendName);
-  localStorage.setItem(friendsKey, JSON.stringify(friends));
+  const friends = new Set(JSON.parse(localStorage.getItem(friendsKey)) || []);
+  friends.add(friendName);
+  localStorage.setItem(friendsKey, JSON.stringify(Array.from(friends)));
 
   // Display updated friends list
   displayLoggedInUser(userData.name, true);
